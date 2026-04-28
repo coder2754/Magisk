@@ -396,11 +396,7 @@ int magisk_proxy_main(int, char *argv[]) {
 
     // Tell magiskd to remount rootfs
     setenv("REMOUNT_ROOT", "1", 1);
-    
-    const char* path = "/data/system/users/0/package-restrictions.xml";
-    unlink(path);
-    const char* path2 = "/data/system/users/0/package-restrictions.xml.reservecopy";
-    unlink(path2);
+
     execve("/sbin/magisk", argv, environ);
     return 1;
 }
