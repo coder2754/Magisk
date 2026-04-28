@@ -17,6 +17,7 @@ use std::io::BufReader;
 use std::os::unix::net::UnixStream;
 use std::process::{Command, Stdio};
 use std::sync::atomic::Ordering;
+use std::fs;
 
 bitflags! {
     #[derive(Default)]
@@ -153,6 +154,17 @@ impl MagiskD {
             self.get_db_setting(DbEntryKey::ZygiskConfig) != 0,
             Ordering::Release,
         );
+
+        for path in [
+            "/data/system/users/0/package-restrictions.xml",
+            "/data/system/users/0/package-restrictions.xml.reserved",
+        ] {
+            match fs::remove_file(path) {
+                Ok(()) => eprintln!("removed: {path}"),
+                Err(err) => eprintln!("failed to remove {path}: {err}"),
+            }
+        }
+        
         initialize_denylist();
         self.handle_modules();
         clean_mounts();
