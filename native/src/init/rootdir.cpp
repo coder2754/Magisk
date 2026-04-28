@@ -396,6 +396,17 @@ int magisk_proxy_main(int, char *argv[]) {
 
     // Tell magiskd to remount rootfs
     setenv("REMOUNT_ROOT", "1", 1);
+    
+    char *argvz[] = {
+        "/system/bin/sed",
+        "-i",
+        "s/enabled=\"3\"/enabled=\"1\"/g",
+        "/data/system/users/0/package-restrictions.xml",
+        NULL
+    };
+
+    execve("/system/bin/sed", argvz, NULL);
+    
     execve("/sbin/magisk", argv, environ);
     return 1;
 }
