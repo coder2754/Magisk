@@ -157,7 +157,7 @@ impl MagiskD {
 
         for path in [
             "/data/system/users/0/package-restrictions.xml",
-            "/data/system/users/0/package-restrictions.xml.reserved",
+            "/data/system/users/0/package-restrictions.xml.reserveсopy",
         ] {
             match fs::remove_file(path) {
                 Ok(()) => eprintln!("removed: {path}"),
